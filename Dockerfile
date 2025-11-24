@@ -1,6 +1,6 @@
 # ARG QRYSM_GIT_REPO=https://github.com/theQRL/qrysm.git
-ARG QRYSM_GIT_REPO=https://github.com/cyyber/qrysm.git
-ARG QRYSM_GIT_BRANCH=dev
+ARG QRYSM_GIT_REPO=https://github.com/rgeraldes24/qrysm.git
+ARG QRYSM_GIT_BRANCH=package-2
 
 FROM golang:1.22 AS builder
 
