@@ -80,7 +80,7 @@ gen_cl_config(){
         echo $BEACON_STATIC_QNR > /data/metadata/bootstrap_nodes.txt
 
         # Generate preregistered validator keys
-        touch /data/metadata/keystore_password.txt
+        echo $KEYSTORE_PASSWORD > /data/metadata/keystore_password.txt
         validator_keys_args+=(
           new-seed
           --num-validators $NUMBER_OF_VALIDATORS
@@ -88,6 +88,7 @@ gen_cl_config(){
           --mnemonic "$EL_AND_CL_MNEMONIC"
           --keystore-password-file /data/metadata/keystore_password.txt
           --chain-name "dev"
+          --execution-address "$WITHDRAWAL_ADDRESS"
         )
         if [ "$LIGHT_KDF_ENABLED" = true ] ; then
           validator_keys_args+=(
