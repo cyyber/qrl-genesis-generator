@@ -24,6 +24,10 @@ SHARD_COMMITTEE_PERIOD: $SHARD_COMMITTEE_PERIOD
 # 2**11 (= 2,048) Execution blocks ~8 hours
 EXECUTION_FOLLOW_DISTANCE: $EXECUTION_FOLLOW_DISTANCE
 SLOTS_PER_EPOCH: $SLOTS_PER_EPOCH
+# 4
+MAX_SEED_LOOKAHEAD: $MAX_SEED_LOOKAHEAD
+# 16
+EPOCHS_PER_EXECUTION_VOTING_PERIOD: $EPOCHS_PER_EXECUTION_VOTING_PERIOD
 
 # Validator cycle
 # ---------------------------------------------------------------
@@ -39,6 +43,10 @@ MIN_PER_EPOCH_CHURN_LIMIT: 10
 CHURN_LIMIT_QUOTIENT: $CHURN_LIMIT_QUOTIENT
 # 2**3 (= 8)
 MAX_PER_EPOCH_ACTIVATION_CHURN_LIMIT: $MAX_PER_EPOCH_ACTIVATION_CHURN_LIMIT
+
+# Withdrawals
+# ---------------------------------------------------------------
+MAX_VALIDATORS_PER_WITHDRAWALS_SWEEP: $MAX_VALIDATORS_PER_WITHDRAWALS_SWEEP
 
 # Fork choice
 # ---------------------------------------------------------------
