@@ -41,7 +41,7 @@ gen_el_config(){
         mkdir -p /data/metadata
         python3 /apps/envsubst.py < /config/el/genesis-config.yaml > $tmp_dir/genesis-config.yaml
         cat $tmp_dir/genesis-config.yaml
-        python3 /apps/el-gen/genesis_gzond.py $tmp_dir/genesis-config.yaml      > /data/metadata/genesis.json
+        python3 /apps/el-gen/genesis_gqrl.py $tmp_dir/genesis-config.yaml      > /data/metadata/genesis.json
     else
         echo "el genesis already exists. skipping generation..."
     fi
@@ -105,7 +105,7 @@ gen_cl_config(){
           generate-genesis
           --num-validators $NUMBER_OF_VALIDATORS
           --deposit-json-file $DEPOSIT_DATA_FILE
-          --gzond-genesis-json-in /data/metadata/genesis.json
+          --gqrl-genesis-json-in /data/metadata/genesis.json
           --output-ssz /data/metadata/genesis.ssz
           --chain-config-file /data/metadata/config.yaml
           --genesis-time $GENESIS_TIMESTAMP
