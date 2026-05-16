@@ -32,7 +32,7 @@ else:
             # E.g. Rinkeby allocates it like this.
             # See https://github.com/ethereum/go-ethereum/blob/092856267067dd78b527a773f5b240d5c9f5693a/core/genesis.go#L370
             **{
-                "Q" + i.to_bytes(length=48, byteorder='big').hex(): {
+                "Q" + i.to_bytes(length=64, byteorder='big').hex(): {
                     "balance": "1",
                 } for i in range(256)
             },
@@ -75,7 +75,7 @@ else:
                 }
             }
         },
-        "coinbase": "Q000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "coinbase": "Q00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "gasLimit": hex(int(data['genesis_gaslimit'] if 'genesis_gaslimit' in data and data['genesis_gaslimit'] is not None else 25000000)),
         "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",

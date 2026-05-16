@@ -2,6 +2,9 @@
 
 FROM golang:1.25 AS builder
 
+ARG QRYSM_GOFLAGS=""
+ENV GOFLAGS="${QRYSM_GOFLAGS}"
+
 WORKDIR /qrysm
 COPY --from=qrysm . .
 RUN go install ./cmd/qrysmctl \

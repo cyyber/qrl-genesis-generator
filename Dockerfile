@@ -1,10 +1,12 @@
 ARG QRYSM_GIT_REPO=https://github.com/adamtka42/qrysm.git
-ARG QRYSM_GIT_BRANCH=48-byte-address
+ARG QRYSM_GIT_BRANCH=migrate-64-byte-addresses
 
 FROM golang:1.25 AS builder
 
 ARG QRYSM_GIT_REPO
 ARG QRYSM_GIT_BRANCH
+ARG QRYSM_GOFLAGS=""
+ENV GOFLAGS="${QRYSM_GOFLAGS}"
 
 RUN git clone -b ${QRYSM_GIT_BRANCH} ${QRYSM_GIT_REPO} \
     && cd qrysm \
