@@ -1,4 +1,4 @@
-ARG QRYSM_GIT_REPO=https://github.com/theQRL/qrysm.git
+ARG QRYSM_GIT_REPO=https://github.com/cyyber/qrysm.git
 ARG QRYSM_GIT_BRANCH=main
 
 FROM golang:1.25 AS builder
@@ -6,8 +6,7 @@ FROM golang:1.25 AS builder
 ARG QRYSM_GIT_REPO
 ARG QRYSM_GIT_BRANCH
 
-# RUN git clone -b ${QRYSM_GIT_BRANCH} ${QRYSM_GIT_REPO}  \
-RUN git clone ${QRYSM_GIT_REPO}  \
+RUN git clone -b ${QRYSM_GIT_BRANCH} ${QRYSM_GIT_REPO} \
     && cd qrysm \
     && go install ./cmd/qrysmctl \
     && go install ./cmd/staking-deposit-cli/deposit \
