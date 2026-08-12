@@ -29,7 +29,6 @@ RUN apt-get update && \
 
 COPY apps /apps
 
-ENV PATH="/root/.cargo/bin:${PATH}"
 RUN cd /apps/el-gen && python3 -m venv .venv && /apps/el-gen/.venv/bin/pip3 install -r /apps/el-gen/requirements.txt
 COPY --from=builder /go/bin/qrysmctl /usr/local/bin/qrysmctl
 COPY --from=builder /go/bin/deposit /usr/local/bin/deposit
