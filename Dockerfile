@@ -1,7 +1,7 @@
 ARG QRYSM_GIT_REPO=https://github.com/cyyber/qrysm.git
 ARG QRYSM_GIT_REF=main
 
-FROM golang:1.26.5-bookworm@sha256:53eeac89074db483fdf0ab3be1df32bf6e47562263d2d0d6baa7f26acb4957dd AS builder
+FROM golang:1.26.5-bookworm AS builder
 
 ARG QRYSM_GIT_REPO
 ARG QRYSM_GIT_REF
@@ -19,7 +19,7 @@ RUN git init /qrysm && \
         ./cmd/staking-deposit-cli/deposit \
         ./cmd/validator
 
-FROM debian:bookworm-slim@sha256:abd67ffcfa541b485a3dff59865ab629aa048a6c613e639d36e7456b0b229241
+FROM debian:bookworm-slim
 WORKDIR /work
 VOLUME ["/config", "/data"]
 EXPOSE 8000/tcp
