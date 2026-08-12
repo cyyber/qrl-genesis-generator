@@ -10,9 +10,6 @@ RUN git init /qrysm && \
     git -C /qrysm remote add origin "${QRYSM_GIT_REPO}" && \
     git -C /qrysm fetch --depth 1 origin "${QRYSM_GIT_REF}" && \
     git -C /qrysm checkout --detach FETCH_HEAD && \
-    if printf '%s\n' "${QRYSM_GIT_REF}" | grep -Eq '^[0-9a-f]{40}$'; then \
-        test "$(git -C /qrysm rev-parse HEAD)" = "${QRYSM_GIT_REF}"; \
-    fi && \
     cd /qrysm && \
     GOTOOLCHAIN=local go install -mod=readonly \
         ./cmd/qrysmctl \
