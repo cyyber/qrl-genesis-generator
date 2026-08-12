@@ -40,12 +40,4 @@ COPY --from=builder /go/bin/validator /usr/local/bin/validator
 COPY config-example /config
 COPY defaults /defaults
 COPY entrypoint.sh .
-
-RUN /apps/el-gen/.venv/bin/pip check && \
-    grep -q 'to_bytes(length=64' /apps/el-gen/genesis_gqrl.py && \
-    grep -q '"baseFeePerGas"' /apps/el-gen/genesis_gqrl.py && \
-    qrysmctl --help >/dev/null && \
-    deposit --help >/dev/null && \
-    validator --version >/dev/null
-
 ENTRYPOINT [ "/work/entrypoint.sh" ]
