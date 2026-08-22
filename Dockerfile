@@ -1,17 +1,20 @@
-ARG QRYSM_GIT_REPO=https://github.com/theQRL/qrysm.git
-ARG QRYSM_GIT_BRANCH=main
+ARG QRYSM_GIT_REPO=https://github.com/cyyber/qrysm.git
+ARG QRYSM_GIT_REF=main
 
-FROM golang:1.25 AS builder
+FROM golang:1.26.5-bookworm AS builder
 
 ARG QRYSM_GIT_REPO
-ARG QRYSM_GIT_BRANCH
+ARG QRYSM_GIT_REF
 
-# RUN git clone -b ${QRYSM_GIT_BRANCH} ${QRYSM_GIT_REPO}  \
-RUN git clone ${QRYSM_GIT_REPO}  \
-    && cd qrysm \
-    && go install ./cmd/qrysmctl \
-    && go install ./cmd/staking-deposit-cli/deposit \
-    && go install ./cmd/validator
+RUN git init /qrysm && \
+    git -C /qrysm remote add origin "${QRYSM_GIT_REPO}" && \
+    git -C /qrysm fetch --depth 1 origin "${QRYSM_GIT_REF}" && \
+    git -C /qrysm checkout --detach FETCH_HEAD && \
+    cd /qrysm && \
+    GOTOOLCHAIN=local go install -mod=readonly \
+        ./cmd/qrysmctl \
+        ./cmd/staking-deposit-cli/deposit \
+        ./cmd/validator
 
 FROM debian:bookworm-slim
 WORKDIR /work
@@ -26,7 +29,6 @@ RUN apt-get update && \
 
 COPY apps /apps
 
-ENV PATH="/root/.cargo/bin:${PATH}"
 RUN cd /apps/el-gen && python3 -m venv .venv && /apps/el-gen/.venv/bin/pip3 install -r /apps/el-gen/requirements.txt
 COPY --from=builder /go/bin/qrysmctl /usr/local/bin/qrysmctl
 COPY --from=builder /go/bin/deposit /usr/local/bin/deposit
