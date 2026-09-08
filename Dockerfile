@@ -16,6 +16,22 @@ RUN git init /qrysm && \
         ./cmd/staking-deposit-cli/deposit \
         ./cmd/validator
 
+# The EL genesis preloads the deposit contract's runtime bytecode. Take it from
+# the Qrysm revision built above so the contract, the depositroot precompile
+# input it builds, and the DepositEvent Qrysm parses can never drift apart.
+RUN mkdir -p /qrysm/cmd/depositcontractcode && \
+    printf '%s\n' \
+        'package main' \
+        'import (' \
+        '	"fmt"' \
+        '	"github.com/theQRL/qrysm/contracts/deposit"' \
+        ')' \
+        'func main() { fmt.Print(deposit.DepositContractRuntimeCodeHex()) }' \
+        > /qrysm/cmd/depositcontractcode/main.go && \
+    cd /qrysm && \
+    GOTOOLCHAIN=local go run -mod=readonly ./cmd/depositcontractcode > /deposit-contract-runtime.hex && \
+    test -s /deposit-contract-runtime.hex
+
 FROM debian:bookworm-slim
 WORKDIR /work
 VOLUME ["/config", "/data"]
@@ -30,6 +46,7 @@ RUN apt-get update && \
 COPY apps /apps
 
 RUN cd /apps/el-gen && python3 -m venv .venv && /apps/el-gen/.venv/bin/pip3 install -r /apps/el-gen/requirements.txt
+COPY --from=builder /deposit-contract-runtime.hex /apps/el-gen/deposit-contract-runtime.hex
 COPY --from=builder /go/bin/qrysmctl /usr/local/bin/qrysmctl
 COPY --from=builder /go/bin/deposit /usr/local/bin/deposit
 COPY --from=builder /go/bin/validator /usr/local/bin/validator
