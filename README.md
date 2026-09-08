@@ -31,5 +31,6 @@ Name           | Default | Description
 -------------- |-------- | ----
 SERVER_ENABLED | false   | Enable a web server that will serve the generated files
 SERVER_PORT    | 8000    | Web server port
+DEPOSIT_CONTRACT_RUNTIME_HEX | `/apps/el-gen/deposit-contract-runtime.hex` | Runtime bytecode preloaded at the deposit contract address; the image writes it from the Qrysm revision it builds
 
 Besides that, you can also use ENV vars in your configuration files. One way of doing this is via the [values.env](config-example/values.env) configuration file. These will be replaced during runtime.
